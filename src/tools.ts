@@ -23,6 +23,7 @@ type attendees = {
 
 type EventData = {
   summary: string;
+  description?: string;
   start: {
     dateTime: string;
     timeZone: string;
@@ -149,12 +150,14 @@ export const getEventTool = tool(
 export const createEventTool = tool(
   async (eventData) => {
     console.log("Create event tool called");
-    const { summary, start, end, attendees } = eventData as EventData;
+    const { summary, start, end, attendees, description } =
+      eventData as EventData;
     const response = await calendar.events.insert({
       calendarId: "primary",
       sendUpdates: "all",
       conferenceDataVersion: 1,
       requestBody: {
+        description,
         summary,
         start,
         end,
