@@ -84,57 +84,54 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-// async function main() {
-//   while (true) {
-//     const question = await rl.question("YOU: ");
+async function main() {
+  try {
+    const result = await app.invoke(
+      {
+        messages: [
+          {
+            role: "system",
+            content: systemInstruction,
+          },
+          {
+            role: "user",
+            // content: question,
+            // content: `can you if I have any new catering orders in my inbox and list them down only for upcoming dates order and if we have any upcoming order can you please also add that event to calendar so I can check be aware of that order and the upcoming date should not include today current date & time. if we don't have any upcoming orders just say to user tthat there are no upcoming order for now.`,
+            content: `can you check if I have any new catering orders in my inbox and list them down only for upcoming dates order and if we have any upcoming order can you please also add that event to calendar so I can check be aware of that order and the upcoming date can also include today catering order as well if any order for today current date available add it to calendar and after adding you can say that the event is added to calendar successfully but also you have to check the email is there but if the event for that is already in calendar do not duplicate that event if we don't have any upcoming orders just say to user that there are no upcoming order for now. also when scheduling a meeting from the email you recieved the order info add that as guest as well. add this email in guests when you schdule a meeting shawarmamoose898@gmail.com.`,
+          },
+        ],
+      },
+      { configurable: { thread_id: "1" } }
+    );
 
-//     if (question === "bye") {
-//       break;
-//     }
+    console.log("AI: ", result.messages[result.messages.length - 1]?.content);
+  } catch (error) {
+    console.error("Error fetching catering orders:", error);
+  }
 
-//     const result = await app.invoke(
-//       {
-//         messages: [
-//           {
-//             role: "system",
-//             content: systemInstruction,
-//           },
-//           {
-//             role: "user",
-//             // content: question,
-//             // content: `can you if I have any new catering orders in my inbox and list them down only for upcoming dates order and if we have any upcoming order can you please also add that event to calendar so I can check be aware of that order and the upcoming date should not include today current date & time. if we don't have any upcoming orders just say to user tthat there are no upcoming order for now.`,
-//             content: `can you check if I have any new catering orders in my inbox and list them down only for upcoming dates order and if we have any upcoming order can you please also add that event to calendar so I can check be aware of that order and the upcoming date can also include today catering order as well if any order for today current date available add it to calendar and after adding you can say that the event is added to calendar successfully but also you have to check the email is there but if the event for that is already in calendar do not duplicate that event if we don't have any upcoming orders just say to user that there are no upcoming order for now. also when scheduling a meeting from the email you recieved the order info add that as guest as well. and do not add the client email mentioned in the body or somewhere when scheduling in calendar.`,
-//           },
-//         ],
-//       },
-//       { configurable: { thread_id: "1" } }
-//     );
+  setTimeout(main, 1000 * 60 * 60 * 3);
+}
 
-//     console.log("AI: ", result.messages[result.messages.length - 1]?.content);
-//   }
-//   rl.close();
-// }
+main();
 
-// main();
+// setInterval(async () => {
+//   const result = await app.invoke(
+//     {
+//       messages: [
+//         {
+//           role: "system",
+//           content: systemInstruction,
+//         },
+//         {
+//           role: "user",
+//           // content: question,
+//           // content: `can you if I have any new catering orders in my inbox and list them down only for upcoming dates order and if we have any upcoming order can you please also add that event to calendar so I can check be aware of that order and the upcoming date should not include today current date & time. if we don't have any upcoming orders just say to user tthat there are no upcoming order for now.`,
+//           content: `can you if I have any new catering orders in my inbox and list them down only for upcoming dates order and if we have any upcoming order can you please also add that event to calendar so I can check be aware of that order and the upcoming date can also include today catering order as well if any order for today current date available add it to calendar and after adding you can say that the event is added to calendar successfully. if we don't have any upcoming orders just say to user that there are no upcoming order for now. also if there's a address mentioned in email add the address in the calendar description as well. If the order is pickup then do not add any address and keep the description as "".`,
+//         },
+//       ],
+//     },
+//     { configurable: { thread_id: "1" } }
+//   );
 
-setInterval(async () => {
-  const result = await app.invoke(
-    {
-      messages: [
-        {
-          role: "system",
-          content: systemInstruction,
-        },
-        {
-          role: "user",
-          // content: question,
-          // content: `can you if I have any new catering orders in my inbox and list them down only for upcoming dates order and if we have any upcoming order can you please also add that event to calendar so I can check be aware of that order and the upcoming date should not include today current date & time. if we don't have any upcoming orders just say to user tthat there are no upcoming order for now.`,
-          content: `can you if I have any new catering orders in my inbox and list them down only for upcoming dates order and if we have any upcoming order can you please also add that event to calendar so I can check be aware of that order and the upcoming date can also include today catering order as well if any order for today current date available add it to calendar and after adding you can say that the event is added to calendar successfully. if we don't have any upcoming orders just say to user that there are no upcoming order for now. also if there's a address mentioned in email add the address in the calendar description as well. If the order is pickup then do not add any address and keep the description as "".`,
-        },
-      ],
-    },
-    { configurable: { thread_id: "1" } }
-  );
-
-  console.log("AI: ", result.messages[result.messages.length - 1]?.content);
-}, 1000 * 60 * 60 * 3);
+//   console.log("AI: ", result.messages[result.messages.length - 1]?.content);
+// }, 1000 * 60 * 60 * 3);
