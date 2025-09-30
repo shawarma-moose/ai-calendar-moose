@@ -47,7 +47,7 @@ export const getLatestGmailTool = tool(
 
       const fromQuery = from
         ? `from:${from}`
-        : "from:shawarmamoose898@gmail.com OR from:lariosqueen839@gmail.com";
+        : "from:shawarmamoose898@gmail.com OR from:lariosqueen839@gmail.com OR from:shawarmawest746@gmail.com";
 
       const finalQuery = `${fromQuery} ${afterDateQuery} is:unread`;
       console.log("Query", finalQuery);
